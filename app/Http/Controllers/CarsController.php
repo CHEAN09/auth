@@ -29,8 +29,16 @@ class CarsController extends Controller
             'acquired_on' => 'date|required'
         ]);
 
-        try {
-            $cars = Cars::create($request->all());
+        try {  
+            
+            $cars = Cars::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'brand' => $request->brand,
+                'acquired_on' => $request->acquired_on,
+                'user_id' => auth()->user()->id
+
+            ]);
             return response()->json($cars, 202);
         }catch(Exception $ex) {
             return response()->json([
@@ -55,7 +63,7 @@ class CarsController extends Controller
     }
 
     public function index() {
-        $cars = Cars::orderBy('name')->get();
+        $cars = Cars::where('user_id',auth()->user()->id)->orderBy('name')->get();
         return response()->json($cars, 200);
     }
 }

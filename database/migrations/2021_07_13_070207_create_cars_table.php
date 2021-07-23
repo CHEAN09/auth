@@ -19,8 +19,11 @@ class CreateCarsTable extends Migration
             $table->string('description');
             $table->string('brand');
             $table->date("acquired_on");
+            $table->bigInteger("user_id")->unsigned();
             $table->string('status')->default('good');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

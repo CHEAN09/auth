@@ -26,8 +26,11 @@ Route::group(['middleware'=>'auth:api'], function(){
     Route::post('/cars/search', [CarsController::class, 'search']);
     Route::post('/cars', [CarsController::class, 'store']);
     Route::get('/cars', [CarsController::class, 'index']);
-    Route::get('/cars/{cars}', [CarsController::class, 'show']);
-    Route::put('/cars/{cars}', [CarsController::class, 'update']);
-    Route::delete('/cars/{cars}', [CarsController::class, 'destroy']);
+
+    Route::group(['middleware'=>'owner'], function(){ 
+        Route::get('/cars/{cars}', [CarsController::class, 'show']);
+        Route::put('/cars/{cars}', [CarsController::class, 'update']);
+        Route::delete('/cars/{cars}', [CarsController::class, 'destroy']);
+    });
 });
 

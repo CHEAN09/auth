@@ -15,7 +15,8 @@ class Cars extends Model
         'description',
         'brand',
         'acquired_on',
-        'status'
+        'status',
+        'user_id'
     ];
     public function container() {
         return $this->belongsTo('App\Models\Cars', 'contained_in', 'id');
